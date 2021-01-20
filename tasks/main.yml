@@ -1,0 +1,23 @@
+---
+# tasks file for packages
+
+- name: install webserver
+  hosts: web2
+  become: yes
+  tasks:
+    - name: install httpd package
+      yum:
+        name: httpd
+        state: latest
+
+    - name: Copying index.html
+      copy:
+        src: "/var/www/html/index.html"
+        dest: "/var/www/html/index.html"
+
+    - name: start and enable httpd service on system reboot
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+     
